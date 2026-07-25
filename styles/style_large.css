@@ -1,0 +1,54 @@
+/* ============================================
+   ONINNA — style_large.css (larger screens)
+   ============================================ */
+
+@media (min-width: 640px){
+  .cta-buttons{
+    flex-direction: row;
+    justify-content:center;
+  }
+
+  #primary_cta,
+  #secondary_cta{
+    width: auto;
+  }
+}
+
+@media (min-width: 768px){
+  #community_cards_sections{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px){
+  header{
+    padding-top: 96px;
+  }
+
+  #community_cards_sections{
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+  }
+
+  .community-card{
+    min-height: 300px;
+  }
+
+  .hero-description{
+    max-width: 720px;
+  }
+
+  .search-info{
+    padding: 34px 40px;
+  }
+
+  .search-info h2{
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1280px){
+  #community_cards_sections{
+    max-width: 1320px;
+  }
+}
