@@ -47,6 +47,36 @@
   }
 }
 
+  #community_cards_sections.marquee-mode{
+    display:block;
+    overflow:hidden;
+    padding: 0 0 60px;
+    mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+  }
+
+  #community_cards_sections.marquee-mode .cards-track{
+    display:flex;
+    gap: 26px;
+    width: max-content;
+    animation: cards-scroll-left 55s linear infinite;
+  }
+
+  #community_cards_sections.marquee-mode:hover .cards-track{
+    animation-play-state: paused;
+  }
+
+  #community_cards_sections.marquee-mode .community-card{
+    flex: 0 0 320px;
+    min-height: 300px;
+  }
+
+  @keyframes cards-scroll-left{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+
+
 @media (min-width: 1280px){
   #community_cards_sections{
     max-width: 1320px;
