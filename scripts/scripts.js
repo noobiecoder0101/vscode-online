@@ -1,43 +1,70 @@
-// ONINNA — scroll-reveal cards + mobile nav toggle
-// Add this to scripts/scripts.js (or link it as an extra <script> tag
-// before scripts.js) — it doesn't touch anything else in that file.
+// ONINNA — responsive card layout (ticker on large screens, scroll-reveal
+// grid otherwise) + mobile nav toggle
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ---- Community cards: ticker on large screens, scroll-reveal grid otherwise ----
   const cardsSection = document.getElementById("community_cards_sections");
-  const isLargeScreen = window.matchMedia("(min-width: 1024px)").matches;
 
-  if (cardsSection && isLargeScreen) {
-    // Duplicate the card set once and put both copies in a flex track —
-    // translating the track by exactly -50% loops seamlessly.
-    const originalCards = Array.from(cardsSection.children);
-    const track = document.createElement("div");
-    track.className = "cards-track";
+  if (cardsSection) {
+    // Keep a pristine copy of the original 9 cards, made once up front,
+    // so either layout can be rebuilt from scratch no matter how many
+    // times the viewport crosses the breakpoint later.
+    const originalCards = Array.from(cardsSection.children).map(card => card.cloneNode(true));
 
-    originalCards.forEach(card => track.appendChild(card));
-    originalCards.forEach(card => track.appendChild(card.cloneNode(true)));
+    const mql = window.matchMedia("(min-width: 1024px)");
+    let currentMode = null; // "marquee" | "grid"
+    let revealObserver = null;
 
-    cardsSection.innerHTML = "";
-    cardsSection.appendChild(track);
-    cardsSection.classList.add("marquee-mode");
+    function buildMarquee() {
+      if (revealObserver) {
+        revealObserver.disconnect();
+        revealObserver = null;
+      }
 
-  } else if (cardsSection) {
-    const cards = cardsSection.querySelectorAll(".community-card");
+      cardsSection.innerHTML = "";
+      const track = document.createElement("div");
+      track.className = "cards-track";
 
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add("in-view"), i * 80);
-          io.unobserve(entry.target);
-        }
+      // Original set + one cloned set = seamless infinite loop at -50%
+      originalCards.forEach(card => track.appendChild(card.cloneNode(true)));
+      originalCards.forEach(card => track.appendChild(card.cloneNode(true)));
+
+      cardsSection.appendChild(track);
+      cardsSection.classList.add("marquee-mode");
+      currentMode = "marquee";
+    }
+
+    function buildGrid() {
+      cardsSection.classList.remove("marquee-mode");
+      cardsSection.innerHTML = "";
+      originalCards.forEach(card => cardsSection.appendChild(card.cloneNode(true)));
+
+      const cards = cardsSection.querySelectorAll(".community-card");
+
+      revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add("in-view"), i * 80);
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      cards.forEach(card => {
+        card.classList.add("pre-reveal"); // opt into hidden state, then reveal on scroll
+        revealObserver.observe(card);
       });
-    }, { threshold: 0.15 });
 
-    cards.forEach(card => {
-      card.classList.add("pre-reveal"); // opt into the hidden state, then reveal on scroll
-      io.observe(card);
-    });
+      currentMode = "grid";
+    }
+
+    function syncLayout(isLargeScreen) {
+      if (isLargeScreen && currentMode !== "marquee") buildMarquee();
+      else if (!isLargeScreen && currentMode !== "grid") buildGrid();
+    }
+
+    syncLayout(mql.matches);
+    mql.addEventListener("change", (e) => syncLayout(e.matches));
   }
 
   // ---- Mobile nav toggle ----

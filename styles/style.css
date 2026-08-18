@@ -1,3 +1,7 @@
+/* ============================================
+   ONINNA — style.css (base / mobile-first)
+   Dark, neon, glassmorphism visual identity
+   ============================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
@@ -16,9 +20,7 @@
 *, *::before, *::after{
   box-sizing:border-box;
 }
-html{
-  overflow-x:hidden;
-}
+
 body{
   margin:0;
   background:
@@ -28,12 +30,12 @@ body{
   color:var(--text);
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height:1.6;
-  
+  overflow-x:hidden;
 }
 
 a{ color:inherit; text-decoration:none; }
 
-/* -------------- Navbar ma niggah ---------- */
+/* ---------- Navbar ---------- */
 
 .navbar{
   position: sticky;
@@ -43,7 +45,7 @@ a{ color:inherit; text-decoration:none; }
   align-items:center;
   justify-content:space-between;
   padding: 20px 24px;
-  background: rgba(7,7,13,0.85);
+  background: rgba(7,7,13,0.65);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
   border-radius: 12px;
@@ -174,7 +176,7 @@ a{ color:inherit; text-decoration:none; }
 /* ---------- Hero ---------- */
 
 header{
-  padding: 20px 20px 40px;
+  padding: 72px 20px 40px;
   text-align:center;
 }
 
