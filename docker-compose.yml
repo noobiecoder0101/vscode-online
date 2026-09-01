@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: oninna-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: oninna
+      POSTGRES_PASSWORD: oninna_dev_password
+      POSTGRES_DB: oninna
+    ports:
+      - "5432:5432"
+    volumes:
+      - oninna_pgdata:/var/lib/postgresql/data
+
+volumes:
+  oninna_pgdata:

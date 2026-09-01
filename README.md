@@ -1,134 +1,132 @@
-# ONINNA — Community Sourcing: Problems, Approach & Solutions
+ONINNA — Community Sourcing: Problems, Approach & Solutions
+What ONINNA is
+
+ONINNA is a community discovery platform — a searchable directory that helps people find trusted online communities (WhatsApp groups, Telegram channels, Discord servers, Reddit communities, and more) by interest, location, language, or platform, instead of hunting for outdated invite links across Google, Reddit threads, or TikTok comments. People can browse categories like Careers, Gaming, Software Development, and Dating for free; joining a community or seeing its full details requires signing in.
 
 A working log of the discovery/sourcing challenges for ONINNA and how each is being addressed.
 
----
-----
+1. No platform offers a full discovery API
 
+Problem No major platform (Telegram, WhatsApp, Facebook, Reddit, X, Snapchat, Discord, Slack, Signal) exposes an API that lists every public or private group/community. Access is either fully closed, limited to groups you own, or restricted to what's already public.
 
-## 1. No platform offers a full discovery API
+Steps taken
 
-**Problem**
-No major platform (Telegram, WhatsApp, Facebook, Reddit, X, Snapchat, Discord, Slack, Signal) exposes an API that lists every public or private group/community. Access is either fully closed, limited to groups you own, or restricted to what's already public.
+Mapped each platform's actual API capabilities and limits (public vs. private access, bot discovery, rate limits/cost)
+Split platforms into two buckets based on what's actually possible: automatable vs. submission-only
 
-**Steps taken**
-- Mapped each platform's actual API capabilities and limits (public vs. private access, bot discovery, rate limits/cost)
-- Split platforms into two buckets based on what's actually possible: **automatable** vs. **submission-only**
+Solution
 
-**Solution**
-- **Automatable (build discovery/enrichment pipelines):** Telegram, Discord, Reddit
-- **Submission-and-curation only (no discovery API exists):** WhatsApp, Slack, Signal, Facebook, X
+Automatable (build discovery/enrichment pipelines): Telegram, Discord, Reddit
+Submission-and-curation only (no discovery API exists): WhatsApp, Slack, Signal, Facebook, X
+2. WhatsApp & Snapchat are hardest to source
 
----
+Problem WhatsApp groups can only be joined via a shared invite link (chat.whatsapp.com/...) — there is no browsable directory or search, so nothing can be "discovered" the way a Telegram channel can. Snapchat doesn't have an equivalent public group/community concept at all — it's built around friends, Stories, and Spotlight, not joinable group chats.
 
-## 2. WhatsApp & Snapchat are hardest to source
+Steps taken
 
-**Problem**
-WhatsApp groups can only be joined via a shared invite link (`chat.whatsapp.com/...`) — there is no browsable directory or search, so nothing can be "discovered" the way a Telegram channel can. Snapchat doesn't have an equivalent public group/community concept at all — it's built around friends, Stories, and Spotlight, not joinable group chats.
+Confirmed there's no workaround that gives real discovery for WhatsApp — only link surfacing (finding links that are already public somewhere)
+Reassessed whether Snapchat belongs on the platform list at all
 
-**Steps taken**
-- Confirmed there's no workaround that gives real discovery for WhatsApp — only *link surfacing* (finding links that are already public somewhere)
-- Reassessed whether Snapchat belongs on the platform list at all
+Solution
 
-**Solution**
-- **WhatsApp:** treat as submission-and-curation only — staff manually source already-public invite links (search, existing directories, forums), owners submit their own, no automated "fetch new groups" is possible
-- **Snapchat:** recommended dropping it from the platform filter list, or repositioning it as "public accounts to follow" rather than "groups to join" if kept
+WhatsApp: treat as submission-and-curation only — staff manually source already-public invite links (search, existing directories, forums), owners submit their own, no automated "fetch new groups" is possible
+Snapchat: recommended dropping it from the platform filter list, or repositioning it as "public accounts to follow" rather than "groups to join" if kept
+3. Cold-start problem — empty directory at launch
 
----
+Problem Waiting on user submissions to build up an initial catalog would take too long; an empty-looking site loses visitors before it has a chance to grow.
 
-## 3. Cold-start problem — empty directory at launch
+Steps taken
 
-**Problem**
-Waiting on user submissions to build up an initial catalog would take too long; an empty-looking site loses visitors before it has a chance to grow.
+Identified the need to manually/programmatically seed the first wave of listings rather than wait on submissions
 
-**Steps taken**
-- Identified the need to manually/programmatically seed the first wave of listings rather than wait on submissions
+Solution
 
-**Solution**
-- Build an **internal admin panel** (separate from the public "Create a Listing" self-serve form) for staff to quick-add listings: paste-a-link auto-pull of title/image/member count where possible, manual category/tag override, a `source` field (self-submitted / staff-curated / partner outreach), and a "verified" toggle
-- Use this panel to seed the first 100–200 listings by hand, focused on 2–3 niches first rather than spreading thin across every category
+Build an internal admin panel (separate from the public "Create a Listing" self-serve form) for staff to quick-add listings: paste-a-link auto-pull of title/image/member count where possible, manual category/tag override, a source field (self-submitted / staff-curated / partner outreach), and a "verified" toggle
+Use this panel to seed the first 100–200 listings by hand, focused on 2–3 niches first rather than spreading thin across every category
+4. Keeping WhatsApp listings accurate over time
 
----
+Problem WhatsApp invite links expire or get regenerated by admins more often than other platforms, and there's no way to verify a listing still matches its description without a human checking.
 
-## 4. Keeping WhatsApp listings accurate over time
+Steps taken
 
-**Problem**
-WhatsApp invite links expire or get regenerated by admins more often than other platforms, and there's no way to verify a listing still matches its description without a human checking.
+Decided on a two-tier verification system rather than a single one-time check
 
-**Steps taken**
-- Decided on a two-tier verification system rather than a single one-time check
+Solution
 
-**Solution**
-- **Tier 1 — automated ping:** periodic check that the link still resolves to a valid, joinable group (applies to both staff-sourced and user/associate-submitted listings)
-- **Tier 2 — human testers:** testers actively join the group and confirm it matches its claimed description/category
-- Verification is treated as **time-limited, not permanent** — re-checked every 60–90 days, or sooner if flagged/high-traffic
-- Re-checks are **trigger-based**, prioritizing user reports and sudden member-count spikes over a blind schedule
-- Testers are **matched to category and language** they understand
-- Every check is **logged** (tester ID, date, notes) for an audit trail, not just a pass/fail badge
+Tier 1 — automated ping: periodic check that the link still resolves to a valid, joinable group (applies to both staff-sourced and user/associate-submitted listings)
+Tier 2 — human testers: testers actively join the group and confirm it matches its claimed description/category
+Verification is treated as time-limited, not permanent — re-checked every 60–90 days, or sooner if flagged/high-traffic
+Re-checks are trigger-based, prioritizing user reports and sudden member-count spikes over a blind schedule
+Testers are matched to category and language they understand
+Every check is logged (tester ID, date, notes) for an audit trail, not just a pass/fail badge
+5. Platform-by-platform sourcing breakdown
+Platform	Discovery method	Automatable?
+Reddit	Public API — search/list subreddits, subscriber counts, activity, directly	Yes — discovery and enrichment
+Telegram	Public directories (TGStat, Telemetr) or search for @username, then Bot API pulls name/photo/member count. A discovery bot (running through a personal Telegram account as its gateway) can also be refreshed repeatedly to surface groups/channels; results get logged to a CSV/Excel sheet for a person to review and manually add	Partial — discovery via directories/submissions/bot, enrichment automatic
+Discord	Public directories (Disboard) for discovery, widget API for member count/online status	Partial — same shape as Telegram
+WhatsApp	Only via already-public invite links (submissions, search, existing directories)	No — submission/curation only
+Slack	Only if a workspace owner publishes a join link publicly	No — submission/curation only
+Signal	Only via direct submission (privacy-first platform, links rarely public)	No — submission/curation only
+Facebook Groups	Graph API only covers groups you own/moderate; otherwise relies on already-public links	No — submission/curation only
+X (Twitter) Communities	Technically searchable via paid API tiers, but expensive; mostly treated as submission-based	No (cost-prohibitive) — submission/curation only
 
----
+Steps taken
 
-## 5. Platform-by-platform sourcing breakdown
+Confirmed via each platform's official API docs which platforms genuinely support programmatic discovery vs. which don't
+Decided to build a shared background "refresh" system rather than one-off scripts per platform: common schema (platform, external_id, last_synced_at, member_count, sync_status), with a platform-specific fetcher plugged in
 
-| Platform | Discovery method | Automatable? |
-|---|---|---|
-| **Reddit** | Public API — search/list subreddits, subscriber counts, activity, directly | Yes — discovery *and* enrichment |
-| **Telegram** | Public directories (TGStat, Telemetr) or search for `@username`, then Bot API pulls name/photo/member count | Partial — discovery via directories/submissions, enrichment automatic |
-| **Discord** | Public directories (Disboard) for discovery, widget API for member count/online status | Partial — same shape as Telegram |
-| **WhatsApp** | Only via already-public invite links (submissions, search, existing directories) | No — submission/curation only |
-| **Slack** | Only if a workspace owner publishes a join link publicly | No — submission/curation only |
-| **Signal** | Only via direct submission (privacy-first platform, links rarely public) | No — submission/curation only |
-| **Facebook Groups** | Graph API only covers groups you own/moderate; otherwise relies on already-public links | No — submission/curation only |
-| **X (Twitter) Communities** | Technically searchable via paid API tiers, but expensive; mostly treated as submission-based | No (cost-prohibitive) — submission/curation only |
+Solution
 
-**Steps taken**
-- Confirmed via each platform's official API docs which platforms genuinely support programmatic discovery vs. which don't
-- Decided to build a **shared background "refresh" system** rather than one-off scripts per platform: common schema (`platform`, `external_id`, `last_synced_at`, `member_count`, `sync_status`), with a platform-specific fetcher plugged in
+Build automated discovery + enrichment pipelines for Reddit, Telegram, Discord
+Rely on submissions, outreach ("claim your listing"), and manual curation for WhatsApp, Slack, Signal, Facebook, X
+6. Location & language filters
 
-**Solution**
-- Build automated discovery + enrichment pipelines for **Reddit, Telegram, Discord**
-- Rely on submissions, outreach ("claim your listing"), and manual curation for **WhatsApp, Slack, Signal, Facebook, X**
+Problem Neither location nor language is metadata any platform provides — both have to be inferred or manually tagged, and automated discovery pipelines naturally skew toward whatever language they're built/searched in (mostly English/Western content).
 
----
+Steps taken
 
-## 6. Location & language filters
+Separated the language problem (solvable with automation) from the country problem (largely not automatable)
+Identified that discovery pipelines searching in English will structurally under-represent non-English communities
 
-**Problem**
-Neither location nor language is metadata any platform provides — both have to be inferred or manually tagged, and automated discovery pipelines naturally skew toward whatever language they're built/searched in (mostly English/Western content).
+Solution
 
-**Steps taken**
-- Separated the language problem (solvable with automation) from the country problem (largely not automatable)
-- Identified that discovery pipelines searching in English will structurally under-represent non-English communities
+Language: auto-detect from the group's name/description using a language-detection library (e.g. fastText lid.176, langdetect) at ingestion time; human testers correct mistakes during verification rather than tagging from scratch
+Country:
+Reddit is the exception — many subreddits are literally country-named, easy to tag
+For other platforms: self-tagged at submission (owner picks from a dropdown), spot-checked by testers; pull country/region fields from directories that already track it (e.g. TGStat for Telegram) where available
+Structural fix for regional skew: run discovery queries in target languages (translated category terms), pull from region-specific directories, and proactively recruit local "ambassadors" to submit well-known non-English communities rather than relying on scraping alone
+7. Project scope: static frontend isn't enough
 
-**Solution**
-- **Language:** auto-detect from the group's name/description using a language-detection library (e.g. fastText lid.176, `langdetect`) at ingestion time; human testers correct mistakes during verification rather than tagging from scratch
-- **Country:**
-  - Reddit is the exception — many subreddits are literally country-named, easy to tag
-  - For other platforms: self-tagged at submission (owner picks from a dropdown), spot-checked by testers; pull country/region fields from directories that already track it (e.g. TGStat for Telegram) where available
-- **Structural fix for regional skew:** run discovery queries in target languages (translated category terms), pull from region-specific directories, and proactively recruit local "ambassadors" to submit well-known non-English communities rather than relying on scraping alone
+Problem Everything designed so far — the admin panel, automated discovery/enrichment pipelines for Telegram/Discord/Reddit, WhatsApp link-ping + human-tester verification, submission forms, database of listings — needs a real backend, a place to store and query data, and a consistent environment to run it in. Plain HTML/CSS/JS can't do any of that on its own.
 
----
+Steps taken
 
-## 7. Project scope: static frontend isn't enough
+Recognized the project has outgrown a purely front-end build
+Decided to treat the remaining build as an opportunity to learn the underlying technologies hands-on, rather than just implementing them
 
-**Problem**
-Everything designed so far — the admin panel, automated discovery/enrichment pipelines for Telegram/Discord/Reddit, WhatsApp link-ping + human-tester verification, submission forms, database of listings — needs a real backend, a place to store and query data, and a consistent environment to run it in. Plain HTML/CSS/JS can't do any of that on its own.
+Solution
 
-**Steps taken**
-- Recognized the project has outgrown a purely front-end build
-- Decided to treat the remaining build as an opportunity to learn the underlying technologies hands-on, rather than just implementing them
+Adding Node.js (and JavaScript fundamentals more broadly) as the backend runtime/language to learn and build with
+Adding Docker to containerize the app and its environment
+Adding a database to persist listings, verification logs, submissions, and user data
+Treating this as a learning track alongside the build — not just shipping the feature, but understanding how each piece works
+8. Access control: browsing vs. joining
 
-**Solution**
-- Adding **Node.js** (and JavaScript fundamentals more broadly) as the backend runtime/language to learn and build with
-- Adding **Docker** to containerize the app and its environment
-- Adding a **database** to persist listings, verification logs, submissions, and user data
-- Treating this as a learning track alongside the build — not just shipping the feature, but understanding how each piece works
+Problem The platform needs to be discoverable (good for SEO, lets people evaluate it before committing) but also needs to protect join links from being scraped, and needs an actual user base to attach verification/reporting/history to.
 
----
+Steps taken
 
-## Open / not yet decided
-- Verification data model (fields for status, last-checked date, tester ID, flag count)
-- Submission-form fields for country/language
-- Prioritization order for which regions/languages to target first
-- Admin panel UI
-- Backend architecture: Node.js framework choice, database choice (SQL vs NoSQL), Docker setup (single container vs. multi-service compose)
+Decided where the sign-in line sits: at browsing vs. at accessing a specific community
+
+Solution
+
+No sign-in required: browsing Explore, Trending, and category pages — anyone can see what's on offer
+Sign-in required: joining a community or viewing its full group info (including the invite link itself)
+Open / not yet decided
+Verification data model (fields for status, last-checked date, tester ID, flag count)
+Submission-form fields for country/language
+Prioritization order for which regions/languages to target first
+Admin panel UI
+Backend architecture: Node.js framework choice (decided: plain Node.js), database choice (decided: PostgreSQL), Docker setup (decided: single Postgres container via Compose)
+Auth approach: session-based vs. token-based, password hashing library
+Telegram discovery bot: refresh cadence/safety limits to avoid the account being flagged, CSV/Excel review workflow details

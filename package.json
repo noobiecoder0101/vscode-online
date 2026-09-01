@@ -1,0 +1,16 @@
+{
+    "name": "oninna-backend",
+    "version": "0.1.0",
+    "description": "ONINNA — plain Node.js backend serving the homepage and a Postgres-backed API",
+    "main": "server..js",
+    "type": "module",
+    
+    "scripts": {
+        "start": "node server.js",
+        "dev": "node --watch server.js"
+        },
+    "dependencies": {
+        "dotenv": "^16.4.5",
+        "pg": "^8.11.5"
+        }
+}
