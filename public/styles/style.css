@@ -435,3 +435,99 @@ footer h4{
   font-size: 13px;
   color: var(--muted);
 }
+
+/* ---------- Phone presentation ---------- */
+
+@media (max-width: 639px){
+  .navbar{
+    padding: 14px 18px;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 10px 28px -20px rgba(0,0,0,0.9);
+  }
+
+  .menu-toggle{
+    width: 38px;
+    height: 38px;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .nav-links.open{
+    padding: 18px;
+    gap: 10px;
+    border: 1px solid var(--border);
+    border-top: 0;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 20px 34px -22px rgba(0,0,0,0.9);
+  }
+
+  .nav-links.open .nav-link{
+    display:block;
+    padding: 12px 4px;
+  }
+
+  header{
+    padding: 56px 20px 32px;
+  }
+
+  .hero .headline p{
+    margin-bottom: 22px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+
+  .hero-description{
+    padding: 16px 20px 10px;
+  }
+
+  .hero-description p{
+    font-size: 15px;
+  }
+
+  #community_cards_sections{
+    gap: 16px;
+    padding: 0 16px 44px;
+  }
+
+  .community-card{
+    min-height: 240px;
+    border-color: rgba(139,92,246,0.18);
+    box-shadow: 0 14px 30px -22px rgba(0,0,0,0.9);
+  }
+
+  .community-card .card-img{
+    filter: saturate(1.08) brightness(0.82);
+  }
+
+  .community-card h2{
+    padding: 0 18px 18px;
+    font-size: 18px;
+  }
+
+  .search-info{
+    margin: 0 16px 44px;
+    padding: 22px 20px;
+    border-color: rgba(139,92,246,0.18);
+    box-shadow: 0 16px 34px -26px rgba(0,0,0,0.9);
+  }
+
+  .search-info h2{
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .closing-message{
+    padding: 0 20px 28px;
+  }
+
+  .cta-buttons{
+    padding: 0 20px 56px;
+  }
+
+  #primary_cta,
+  #secondary_cta{
+    max-width: none;
+  }
+}
