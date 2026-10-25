@@ -1,20 +1,8 @@
 import { verifyToken } from "../utils/auth.js";
+import { parseCookies } from "../utils/http.js";
 
 export function attachUser(req, res) {
-  const cookies = {};
-  const cookieHeader = req.headers.cookie;
-
-  if (cookieHeader) {
-    for (const piece of cookieHeader.split("; ")) {
-      const separatorIndex = piece.indexOf("=");
-
-      if (separatorIndex !== -1) {
-        const name = piece.slice(0, separatorIndex);
-        const value = piece.slice(separatorIndex + 1);
-        cookies[name] = value;
-      }
-    }
-  }
+  const cookies = parseCookies(req.headers.cookie);
 
   if (!cookies.token) {
     req.user = null;
