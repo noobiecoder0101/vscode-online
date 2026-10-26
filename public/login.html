@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <link rel="stylesheet" href="styles/style_large.css">
+    <title>Sign in | ONINNA</title>
+</head>
+<body>
+
+    <nav class="navbar" aria-label="Main">
+        <a href="index.html" class="nav-logo">
+            <span class="logo-text">ONINNA</span>
+            <span class="logo-dot">.</span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="communities.html" class="nav-link">Explore</a></li>
+            <li><a href="index.html#community_cards_sections" class="nav-link">Categories</a></li>
+            <li><a href="communities.html?sort=members" class="nav-link">Trending</a></li>
+            <li><a href="index.html#about" class="nav-link">About</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <div class="nav-auth" id="navAuth">
+                <a href="login.html" class="btn-signin">Sign in</a>
+            </div>
+            <a href="listings.html" class="btn-submit">+ Add Group</a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="auth-page">
+        <section class="auth-card" aria-labelledby="authTitle">
+
+            <div id="signedIn" hidden>
+                <h1>You are signed in</h1>
+                <p class="auth-sub" id="signedInText"></p>
+                <div class="auth-actions">
+                    <a class="btn btn-primary" id="continueLink" href="communities.html">Continue</a>
+                    <button type="button" class="btn btn-ghost" id="signOut">Sign out</button>
+                </div>
+            </div>
+
+            <div id="authPanel">
+                <h1 id="authTitle">Sign in</h1>
+                <p class="auth-sub" id="authSub"></p>
+
+                <div class="segmented" role="group" aria-label="Sign in or create an account">
+                    <button type="button" id="modeLogin" aria-pressed="true">Sign in</button>
+                    <button type="button" id="modeRegister" aria-pressed="false">Create account</button>
+                </div>
+
+                <noscript>
+                    <p class="form-error" role="alert" style="display: block; margin-bottom: var(--s2);">
+                        JavaScript is required to sign in securely. Please open this page via the local server at <a href="http://localhost:3000/login.html" style="color: inherit; text-decoration: underline;">http://localhost:3000/login.html</a> with JavaScript enabled.
+                    </p>
+                </noscript>
+
+                <form id="authForm" method="post" action="#" novalidate>
+                    <div class="field">
+                        <label for="email">Email</label>
+                        <input class="input" id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <input class="input" id="password" name="password" type="password" autocomplete="current-password" required aria-describedby="passwordHint">
+                        <p class="hint" id="passwordHint" hidden>Use at least 8 characters.</p>
+                    </div>
+
+                    <label class="check">
+                        <input type="checkbox" id="showPassword">
+                        Show password
+                    </label>
+
+                    <p class="form-error" id="formError" role="alert" hidden></p>
+
+                    <button class="btn btn-primary btn-block" id="submitBtn" type="submit">Sign in</button>
+                </form>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        <h4>&copy;ONINNA 2026</h4>
+    </footer>
+
+    <script src="scripts/scripts.js" defer></script>
+    <script type="module" src="scripts/login.js"></script>
+</body>
+</html>

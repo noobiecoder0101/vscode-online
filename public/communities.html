@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse group chats and communities on Telegram, Discord, WhatsApp and more. Filter by category, platform and keyword.">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <title>Explore communities | ONINNA</title>
+</head>
+<body>
+
+    <nav class="navbar" aria-label="Main">
+        <a href="index.html" class="nav-logo">
+            <span class="logo-text">ONINNA</span>
+            <span class="logo-dot">.</span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="communities.html" class="nav-link active" aria-current="page">Explore</a></li>
+            <li><a href="index.html#community_cards_sections" class="nav-link">Categories</a></li>
+            <li><a href="communities.html?sort=members" class="nav-link">Trending</a></li>
+            <li><a href="index.html" class="nav-link">About</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <div class="nav-auth" id="navAuth">
+                <a href="login.html" class="btn-signin">Sign in</a>
+            </div>
+            <a href="listings.html" class="btn-submit">+ Add Group</a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="page">
+
+        <div class="page-head">
+            <h1>Explore communities</h1>
+            <p>Browsing is free. You only need an account to get the invite link for a group.</p>
+        </div>
+
+        <form class="filters" id="filters" role="search" aria-label="Filter communities">
+            <div class="field field-search">
+                <label for="q">Search</label>
+                <input class="input" id="q" name="q" type="search" maxlength="100" autocomplete="off" placeholder="Name or topic">
+            </div>
+
+            <div class="field field-category">
+                <label for="category">Category</label>
+                <select class="select" id="category" name="category">
+                    <option value="">All categories</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="platform">Platform</label>
+                <select class="select" id="platform" name="platform">
+                    <option value="">All</option>
+                    <option value="telegram">Telegram</option>
+                    <option value="discord">Discord</option>
+                    <option value="whatsapp">WhatsApp</option>
+                    <option value="reddit">Reddit</option>
+                    <option value="slack">Slack</option>
+                    <option value="signal">Signal</option>
+                    <option value="facebook">Facebook</option>
+                    <option value="x">X</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="sort">Sort by</label>
+                <select class="select" id="sort" name="sort">
+                    <option value="members">Members</option>
+                    <option value="newest">Newest</option>
+                </select>
+            </div>
+        </form>
+
+        <div class="results-bar">
+            <p id="resultsStatus" role="status" aria-live="polite">Loading communities...</p>
+            <button type="button" class="btn btn-ghost btn-small" id="clearFilters" hidden>Clear filters</button>
+        </div>
+
+        <div id="resultsState" class="state" hidden></div>
+        <ul id="results" class="listing-grid" aria-busy="true"></ul>
+
+        <nav class="pager" id="pager" aria-label="Pagination" hidden>
+            <button type="button" class="btn btn-ghost btn-small" id="prevPage">Previous</button>
+            <span id="pageInfo"></span>
+            <button type="button" class="btn btn-ghost btn-small" id="nextPage">Next</button>
+        </nav>
+
+    </main>
+
+    <footer>
+        <h4>&copy;ONINNA 2026</h4>
+    </footer>
+
+    <script src="scripts/scripts.js" defer></script>
+    <script type="module" src="scripts/communities.js"></script>
+</body>
+</html>
