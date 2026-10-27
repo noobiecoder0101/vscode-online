@@ -10,7 +10,7 @@ export async function listCategories(req, res) {
       categories.icon,
       COUNT(communities.id)::integer AS community_count
     FROM categories
-    LEFT JOIN communities ON communities.category_id = categories.id
+    LEFT JOIN communities ON communities.category_id = categories.id AND communities.status = 'approved'
     GROUP BY categories.id, categories.slug, categories.name, categories.icon
     ORDER BY categories.id
   `);

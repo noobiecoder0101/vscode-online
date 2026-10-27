@@ -130,3 +130,18 @@ Admin panel UI
 Backend architecture: Node.js framework choice (decided: plain Node.js), database choice (decided: PostgreSQL), Docker setup (decided: single Postgres container via Compose)
 Auth approach: session-based vs. token-based, password hashing library
 Telegram discovery bot: refresh cadence/safety limits to avoid the account being flagged, CSV/Excel review workflow details
+
+
+## Local setup
+
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+2. Start the database: `docker compose up -d`
+3. Copy the environment file and set a secret:
+   ```
+   cp .env.example .env
+   # Edit .env and set JWT_SECRET to a random string of at least 32 characters.
+   ```
+4. Run migrations: `npm run db:migrate`
+5. Seed demo data: `npm run db:seed`
+6. Start the dev server: `npm run dev`
+7. Run the test suite: `npm test`

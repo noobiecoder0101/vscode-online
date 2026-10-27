@@ -135,3 +135,38 @@
 ### Next step
 
 2026-10-23 01:07:21 +01:00 - Await approval to start Phase 5: frontend data wiring.
+
+## 2026-10-27: Task 1 complete: migrations
+- Added src/db/migrations/ with 001_initial.sql, 002_claims_and_listing_status.sql, 003_bots.sql, 004_reviews_and_reports.sql.
+- Added src/db/migrate.js: tracks applied files in schema_migrations, bootstraps 001 when communities exists, runs each file in its own transaction, stops on first failure.
+- Tests: 3/3 green (auth, invite-link-protection, migrations idempotency + seeded rows approved).
+
+## 2026-10-27: Task 2 complete: approved-only queries, dev scripts, README
+- Filtered GET /api/communities, detail, join, and category counts to status = 'approved', returning 404 on detail/join for non-approved rows.
+- Added src/db/seed.js (skips when non-empty) and src/db/reset.js (drops tables, requires --yes, refuses production, reruns migrate and seed), and added Local setup to README.md.
+- Tests: 4/4 green (including approved-only filtering, 404 on pending/rejected detail/join, and sensitive field omission).
+
+## 2026-10-27: Task 3 complete: link utilities
+- Created src/utils/links.js with classifyInviteLink (strict allowlist, https-only, max 300 chars, no userinfo) and canonicalizeLink (host lowercasing, www/query/hash/trailing slash removal, telegram username lowercasing).
+- Added test/links.test.js with 30+ table-driven test cases covering edge cases, userinfo, scheme attacks, and canonicalization.
+- Tests: 6/6 green across all test files.
+
+## 2026-10-27: Task 4 complete: submissions, my listings, staff review
+- Implemented POST /api/communities (validation, 24h rate limit, canonical deduplication, status pending), GET /api/me/communities (review_note only on rejected, no sensitive links), and src/middleware/requireRole.js.
+- Implemented admin review routes GET /api/admin/communities, POST /api/admin/communities/:id/approve, POST /api/admin/communities/:id/reject with scripts/set-role.js.
+- Tests: 7/7 green across full suite.
+
+## 2026-10-27: Task 5 complete: claim flow API and service
+- Built src/claims/service.js with startClaim (manual review fallback, unexpired code conflicts, rate limits) and completeTelegramClaim (atomic FOR UPDATE, chat/admin verification, conflict handling).
+- Added routes POST /api/communities/:id/claim and staff admin claim-review endpoints (list, approve, reject).
+- Tests: 8/8 green across full test suite.
+
+## 2026-10-27: Task 6 complete: owner bot config API
+- Created src/routes/botConfig.js with GET and PUT /api/communities/:id/bot-config, enforcing owner-only checks (404 otherwise) and stripping control characters except newlines.
+- Implemented payload validation for greeting_template (1-500 chars), rules_text (0-1000 chars), and boolean enabled state.
+- Tests: 9/9 green across full test suite.
+
+## 2026-10-27: Task 7 complete: Telegram welcome bot worker
+- Created src/bots/telegram/handlers.js with pure handlers (HTML escaping, single-pass greeting, claim flow, rate limiting, migration, kick/leave tracking) and src/bots/worker.js wiring with pinned telegraf.
+- Added blank TELEGRAM_BOT_TOKEN to .env.example, added npm script bot, and added test/telegram-bot.test.js with comprehensive mock tests.
+- Tests: 10/10 green across all test files.

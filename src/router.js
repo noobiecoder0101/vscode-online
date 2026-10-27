@@ -1,8 +1,24 @@
 import { attachUser } from "./middleware/attachUser.js";
 import { validatePostRequest } from "./middleware/requestSecurity.js";
+import {
+  approveClaimReview,
+  approveCommunity,
+  listAdminCommunities,
+  listClaimReviews,
+  rejectClaimReview,
+  rejectCommunity,
+} from "./routes/admin.js";
 import { login, logout, me, register } from "./routes/auth.js";
+import { getBotConfig, updateBotConfig } from "./routes/botConfig.js";
 import { listCategories } from "./routes/categories.js";
-import { getCommunity, getCommunityJoinLink, listCommunities } from "./routes/communities.js";
+import {
+  claimCommunity,
+  createCommunity,
+  getCommunity,
+  getCommunityJoinLink,
+  listCommunities,
+  listMyCommunities,
+} from "./routes/communities.js";
 import { handleHealthCheck } from "./routes/health.js";
 import { sendJson } from "./utils/http.js";
 
@@ -38,7 +54,7 @@ export function createRouter() {
     attachUser(req, res);
     const url = new URL(req.url, "http://localhost");
     if (!url.pathname.startsWith("/api/")) return false;
-    if (req.method === "POST" && !validatePostRequest(req, res)) return true;
+    if ((req.method === "POST" || req.method === "PUT") && !validatePostRequest(req, res)) return true;
     try {
       decodeURIComponent(url.pathname);
     } catch {
@@ -68,7 +84,18 @@ router.register("GET", "/api/health", handleHealthCheck);
 router.register("GET", "/api/categories", listCategories);
 router.register("GET", "/api/communities", listCommunities);
 router.register("GET", "/api/communities/:id/join", getCommunityJoinLink);
+router.register("GET", "/api/communities/:id/bot-config", getBotConfig);
+router.register("PUT", "/api/communities/:id/bot-config", updateBotConfig);
 router.register("GET", "/api/communities/:id", getCommunity);
+router.register("POST", "/api/communities/:id/claim", claimCommunity);
+router.register("POST", "/api/communities", createCommunity);
+router.register("GET", "/api/me/communities", listMyCommunities);
+router.register("GET", "/api/admin/communities", listAdminCommunities);
+router.register("POST", "/api/admin/communities/:id/approve", approveCommunity);
+router.register("POST", "/api/admin/communities/:id/reject", rejectCommunity);
+router.register("GET", "/api/admin/claim-reviews", listClaimReviews);
+router.register("POST", "/api/admin/claim-reviews/:id/approve", approveClaimReview);
+router.register("POST", "/api/admin/claim-reviews/:id/reject", rejectClaimReview);
 router.register("POST", "/api/auth/register", register);
 router.register("POST", "/api/auth/login", login);
 router.register("POST", "/api/auth/logout", logout);
