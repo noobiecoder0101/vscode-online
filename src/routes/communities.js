@@ -353,6 +353,7 @@ export async function listMyCommunities(req, res) {
       communities.status,
       communities.review_note,
       communities.created_at,
+      (communities.owner_id = $1) AS is_owner,
       categories.slug AS category_slug,
       categories.name AS category_name
     FROM communities
@@ -368,6 +369,7 @@ export async function listMyCommunities(req, res) {
       platform: row.platform,
       status: row.status,
       created_at: row.created_at,
+      is_owner: Boolean(row.is_owner),
       category: {
         slug: row.category_slug,
         name: row.category_name,

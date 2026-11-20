@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Submit and manage your online communities on ONINNA.">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <title>My listings | ONINNA</title>
+</head>
+<body>
+
+    <nav class="navbar" aria-label="Main">
+        <a href="index.html" class="nav-logo">
+            <span class="logo-text">ONINNA</span>
+            <span class="logo-dot">.</span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="communities.html" class="nav-link">Explore</a></li>
+            <li><a href="index.html#community_cards_sections" class="nav-link">Categories</a></li>
+            <li><a href="communities.html?sort=members" class="nav-link">Trending</a></li>
+            <li><a href="index.html#about" class="nav-link">About</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <div class="nav-auth" id="navAuth">
+                <a href="login.html" class="btn-signin">Sign in</a>
+            </div>
+            <a href="listings.html" class="btn-submit" aria-current="page">+ Add Group</a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="page">
+
+        <div class="page-head">
+            <h1>Community listings</h1>
+            <p>Submit a new group or view the status of your existing submissions.</p>
+        </div>
+
+        <section id="authGate" class="state" hidden>
+            <h2>Sign in required</h2>
+            <p>You need an account to submit communities and view your listings.</p>
+            <a id="authGateLink" class="btn btn-primary" href="login.html">Sign in</a>
+        </section>
+
+        <div id="contentArea" hidden>
+
+            <section class="card-section" aria-labelledby="submitTitle">
+                <h2 id="submitTitle">Submit a community</h2>
+                <p class="section-sub">All submissions are reviewed before appearing in the public directory.</p>
+
+                <form id="submitForm" novalidate>
+                    <div class="field">
+                        <label for="name">Community name</label>
+                        <input class="input" id="name" name="name" type="text" minlength="3" maxlength="80" required autocomplete="off" placeholder="e.g. Lagos Tech Builders" aria-describedby="nameHint nameError">
+                        <p class="hint" id="nameHint">3 to 80 characters.</p>
+                        <p class="form-error" id="nameError" role="alert" hidden></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="description">Description (optional)</label>
+                        <textarea class="input textarea" id="description" name="description" maxlength="500" rows="3" placeholder="What is this community about?" aria-describedby="descCounter descError"></textarea>
+                        <p class="counter" id="descCounter" aria-live="polite">0 / 500 characters</p>
+                        <p class="form-error" id="descError" role="alert" hidden></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="category">Category</label>
+                        <select class="select" id="category" name="category" required aria-describedby="categoryError">
+                            <option value="">Select a category</option>
+                        </select>
+                        <p class="form-error" id="categoryError" role="alert" hidden></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="platform">Platform</label>
+                        <select class="select" id="platform" name="platform" required aria-describedby="platformError">
+                            <option value="">Select a platform</option>
+                            <option value="telegram">Telegram</option>
+                            <option value="discord">Discord</option>
+                            <option value="whatsapp">WhatsApp</option>
+                            <option value="reddit">Reddit</option>
+                            <option value="slack">Slack</option>
+                            <option value="signal">Signal</option>
+                            <option value="facebook">Facebook</option>
+                            <option value="x">X</option>
+                        </select>
+                        <p class="form-error" id="platformError" role="alert" hidden></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="inviteLink">Invite link</label>
+                        <input class="input" id="inviteLink" name="invite_link" type="url" required placeholder="https://..." aria-describedby="linkHint linkError">
+                        <p class="hint" id="linkHint">Must start with https:// and match the selected platform.</p>
+                        <p class="form-error" id="linkError" role="alert" hidden></p>
+                    </div>
+
+                    <p class="form-error" id="formError" role="alert" hidden></p>
+                    <p class="form-status" id="formStatus" role="status" aria-live="polite" hidden></p>
+
+                    <button class="btn btn-primary btn-block" id="submitBtn" type="submit">Submit community</button>
+                </form>
+            </section>
+
+            <section class="card-section" aria-labelledby="myListingsTitle">
+                <h2 id="myListingsTitle">My listings</h2>
+                <div id="myListingsStatus" role="status" aria-live="polite">Loading your listings...</div>
+                <div id="myListingsEmpty" class="state" hidden>
+                    <p>You have not submitted any communities yet.</p>
+                </div>
+                <ul id="myListingsList" class="my-listings-grid" hidden></ul>
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <h4>&copy;ONINNA 2026</h4>
+    </footer>
+
+    <script src="scripts/scripts.js" defer></script>
+    <script type="module" src="scripts/listings.js"></script>
+</body>
+</html>

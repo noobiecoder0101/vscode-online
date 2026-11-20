@@ -170,3 +170,9 @@
 - Created src/bots/telegram/handlers.js with pure handlers (HTML escaping, single-pass greeting, claim flow, rate limiting, migration, kick/leave tracking) and src/bots/worker.js wiring with pinned telegraf.
 - Added blank TELEGRAM_BOT_TOKEN to .env.example, added npm script bot, and added test/telegram-bot.test.js with comprehensive mock tests.
 - Tests: 10/10 green across all test files.
+
+
+## 2026-11-20: Frontend signed-in screens and safety tests
+- Added public/listings.html, public/admin.html, public/manage.html with matching scripts, styles, auth gates, and accessible controls.
+- Wired public/index.html navigation and category links to match seeded routes, eliminating inline script and style attributes.
+- Added test/frontend-safety.test.js enforcing DOM sink protection, strict attribute cleanliness, and metadata standards; all safety and link tests pass.

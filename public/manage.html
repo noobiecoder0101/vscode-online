@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <title>Manage community | ONINNA</title>
+</head>
+<body>
+
+    <nav class="navbar" aria-label="Main">
+        <a href="index.html" class="nav-logo">
+            <span class="logo-text">ONINNA</span>
+            <span class="logo-dot">.</span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="communities.html" class="nav-link">Explore</a></li>
+            <li><a href="index.html#community_cards_sections" class="nav-link">Categories</a></li>
+            <li><a href="communities.html?sort=members" class="nav-link">Trending</a></li>
+            <li><a href="index.html#about" class="nav-link">About</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <div class="nav-auth" id="navAuth">
+                <a href="login.html" class="btn-signin">Sign in</a>
+            </div>
+            <a href="listings.html" class="btn-submit">+ Add Group</a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="page">
+
+        <div id="errorState" class="state" hidden>
+            <p id="errorMessage">Invalid community ID.</p>
+            <a class="btn btn-ghost btn-small" href="communities.html">Back to communities</a>
+        </div>
+
+        <div id="authGate" class="state" hidden>
+            <h2>Sign in required</h2>
+            <p>You must sign in to manage this community.</p>
+            <a id="signInBtn" class="btn btn-primary" href="login.html">Sign in</a>
+        </div>
+
+        <div id="manageContent" hidden>
+
+            <div class="page-head">
+                <h1 id="communityName">Manage community</h1>
+                <p id="communityMeta" class="section-sub"></p>
+            </div>
+
+            <!-- Claim Section (Shown when user is not yet the owner) -->
+            <section id="claimSection" class="card-section" aria-labelledby="claimTitle" hidden>
+                <h2 id="claimTitle">Claim this community</h2>
+                <p class="section-sub">Verify group ownership to customize bot greetings and manage community settings.</p>
+
+                <div id="claimPrompt">
+                    <button type="button" class="btn btn-primary" id="claimBtn">Claim this group</button>
+                    <p id="claimFeedback" class="form-error" role="alert" hidden></p>
+                </div>
+
+                <div id="claimReviewNotice" class="form-status" role="status" aria-live="polite" hidden></div>
+
+                <div id="claimBox" class="claim-box card-block" hidden>
+                    <h3>Verification steps</h3>
+                    <ol class="claim-steps">
+                        <li>Make the group link public.</li>
+                        <li id="stepBotAdmin">Add bot as an administrator.</li>
+                        <li>Post the command in the group as an admin:</li>
+                    </ol>
+
+                    <div class="command-box">
+                        <code id="claimCommand" class="claim-code-display"></code>
+                        <button type="button" class="btn btn-ghost btn-small" id="copyCommandBtn">Copy command</button>
+                    </div>
+
+                    <p id="copyStatus" class="hint" role="status" aria-live="polite"></p>
+                    <p id="claimTimer" class="claim-timer">Code expires in: <span id="timeRemaining">30:00</span></p>
+
+                    <div class="claim-actions">
+                        <button type="button" class="btn btn-primary btn-small" id="checkStatusBtn">Check status</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bot Settings Section (Shown when user is the owner) -->
+            <section id="botSection" class="card-section" aria-labelledby="botTitle" hidden>
+                <h2 id="botTitle">Welcome bot settings</h2>
+                <p class="section-sub">Configure automatic welcome messages for new members joining your group.</p>
+
+                <div id="noInstallNotice" class="state" hidden>
+                    <p>Claim your group first.</p>
+                </div>
+
+                <form id="botConfigForm" novalidate hidden>
+                    <div class="field">
+                        <label for="greetingTemplate">Greeting template</label>
+                        <textarea class="input textarea" id="greetingTemplate" name="greeting_template" maxlength="500" rows="3" required aria-describedby="greetingCounter placeholderHint greetingError"></textarea>
+                        <p class="counter" id="greetingCounter" aria-live="polite">0 / 500 characters</p>
+                        <p class="hint" id="placeholderHint">Supported placeholders: <code>{user}</code>, <code>{group_name}</code>, <code>{rules}</code>, <code>{member_count}</code></p>
+                        <p class="form-error" id="greetingError" role="alert" hidden></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="rulesText">Rules text</label>
+                        <textarea class="input textarea" id="rulesText" name="rules_text" maxlength="1000" rows="4" placeholder="Enter community guidelines" aria-describedby="rulesCounter rulesError"></textarea>
+                        <p class="counter" id="rulesCounter" aria-live="polite">0 / 1000 characters</p>
+                        <p class="form-error" id="rulesError" role="alert" hidden></p>
+                    </div>
+
+                    <label class="check">
+                        <input type="checkbox" id="botEnabled" name="enabled">
+                        Enable welcome bot greetings
+                    </label>
+
+                    <div class="preview-box">
+                        <h3>Live preview</h3>
+                        <div class="preview-message" id="previewDisplay" role="region" aria-label="Greeting live preview"></div>
+                    </div>
+
+                    <p class="form-status" id="saveStatus" role="status" aria-live="polite" hidden></p>
+                    <p class="form-error" id="saveError" role="alert" hidden></p>
+
+                    <button type="submit" class="btn btn-primary btn-block" id="saveConfigBtn">Save settings</button>
+                </form>
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <h4>&copy;ONINNA 2026</h4>
+    </footer>
+
+    <script src="scripts/scripts.js" defer></script>
+    <script type="module" src="scripts/manage.js"></script>
+</body>
+</html>

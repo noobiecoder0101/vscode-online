@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <title>Admin review | ONINNA</title>
+</head>
+<body>
+
+    <nav class="navbar" aria-label="Main">
+        <a href="index.html" class="nav-logo">
+            <span class="logo-text">ONINNA</span>
+            <span class="logo-dot">.</span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="communities.html" class="nav-link">Explore</a></li>
+            <li><a href="index.html#community_cards_sections" class="nav-link">Categories</a></li>
+            <li><a href="communities.html?sort=members" class="nav-link">Trending</a></li>
+            <li><a href="index.html#about" class="nav-link">About</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <div class="nav-auth" id="navAuth">
+                <a href="login.html" class="btn-signin">Sign in</a>
+            </div>
+            <a href="listings.html" class="btn-submit">+ Add Group</a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="page">
+
+        <div id="authGate" class="state" hidden>
+            <h2>Sign in required</h2>
+            <p>You must sign in to view this page.</p>
+            <a id="signInBtn" class="btn btn-primary" href="login.html">Sign in</a>
+        </div>
+
+        <div id="forbiddenGate" class="state" hidden>
+            <p id="forbiddenText">You do not have access to this page.</p>
+        </div>
+
+        <div id="adminContent" hidden>
+
+            <div class="page-head">
+                <h1>Admin review</h1>
+                <p>Moderate pending community listings and handle manual claim requests.</p>
+            </div>
+
+            <p id="actionStatus" class="form-status" role="status" aria-live="polite" hidden></p>
+            <p id="actionError" class="form-error" role="alert" hidden></p>
+
+            <div class="tabs" role="tablist" aria-label="Admin sections">
+                <button type="button" class="tab-btn" role="tab" id="tabListings" aria-selected="true" aria-controls="panelListings" tabindex="0">Pending listings</button>
+                <button type="button" class="tab-btn" role="tab" id="tabClaims" aria-selected="false" aria-controls="panelClaims" tabindex="0">Claim reviews</button>
+            </div>
+
+            <section id="panelListings" role="tabpanel" aria-labelledby="tabListings">
+                <h2 class="sr-only">Pending community listings</h2>
+                <div id="listingsStatus" role="status" aria-live="polite">Loading pending listings...</div>
+                <div id="listingsEmpty" class="state" hidden>
+                    <p>No pending community listings to review.</p>
+                </div>
+                <ul id="listingsList" class="admin-items-list" hidden></ul>
+
+                <nav class="pager" id="listingsPager" aria-label="Listings pagination" hidden>
+                    <button type="button" class="btn btn-ghost btn-small" id="prevListings">Previous</button>
+                    <span id="listingsPageInfo"></span>
+                    <button type="button" class="btn btn-ghost btn-small" id="nextListings">Next</button>
+                </nav>
+            </section>
+
+            <section id="panelClaims" role="tabpanel" aria-labelledby="tabClaims" hidden>
+                <h2 class="sr-only">Pending claim reviews</h2>
+                <div id="claimsStatus" role="status" aria-live="polite">Loading claim reviews...</div>
+                <div id="claimsEmpty" class="state" hidden>
+                    <p>No pending claim reviews.</p>
+                </div>
+                <ul id="claimsList" class="admin-items-list" hidden></ul>
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <h4>&copy;ONINNA 2026</h4>
+    </footer>
+
+    <script src="scripts/scripts.js" defer></script>
+    <script type="module" src="scripts/admin.js"></script>
+</body>
+</html>

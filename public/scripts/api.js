@@ -70,6 +70,20 @@ export async function api(path, options = {}) {
 }
 
 /**
+ * Fetches the currently authenticated session user, or null if unauthenticated.
+ *
+ * @returns {Promise<object | null>} Current user or null
+ */
+export async function getMe() {
+  try {
+    const res = await api("/api/auth/me");
+    return res.ok && res.data && res.data.user ? res.data.user : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Initializes navigation bar authentication UI across public pages.
  * Fetches the current session and populates sign-in / user + sign-out elements.
  *
@@ -80,11 +94,10 @@ export async function initNav() {
   if (!authContainers.length) return null;
 
   try {
-    const res = await api("/api/auth/me");
-    const user = res.ok && res.data && res.data.user ? res.data.user : null;
+    const user = await getMe();
 
     for (const container of authContainers) {
-      container.innerHTML = "";
+      container.replaceChildren();
       if (user) {
         const userSpan = document.createElement("span");
         userSpan.className = "nav-user";

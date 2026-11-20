@@ -13,6 +13,14 @@
   --border-strong: rgba(255,255,255,0.18);
   --focus-ring: #a78bfa;
   --danger: #ff9b9b;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --warning-surface: rgba(251,191,36,0.12);
+  --warning-border: rgba(251,191,36,0.3);
+  --success-surface: rgba(74,222,128,0.12);
+  --success-border: rgba(74,222,128,0.3);
+  --danger-surface: rgba(255,155,155,0.12);
+  --danger-border: rgba(255,155,155,0.3);
   --btn-from: #7c3aed;   /* white text on both ends passes 4.5:1 */
   --btn-to: #2563eb;
 
@@ -521,4 +529,321 @@
   .btn-signout:hover{
     transform:none;
   }
+}
+
+
+/* ---------- Shared new sections & cards ---------- */
+
+.card-section{
+  margin-top: var(--s4);
+  padding: var(--s3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.section-sub{
+  margin: 0 0 var(--s3);
+  color: var(--muted);
+  font-size: 14.5px;
+}
+
+.card-block{
+  padding: var(--s3);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.textarea{
+  min-height: 96px;
+  resize: vertical;
+}
+
+.counter{
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--muted);
+  text-align: right;
+}
+
+.form-status{
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: var(--surface-strong);
+  font-size: 14px;
+  color: var(--text);
+}
+
+.btn-danger{
+  color: var(--text);
+  background: var(--danger-surface);
+  border-color: var(--danger-border);
+}
+
+.btn-danger:hover:not(:disabled){
+  background: var(--danger);
+  color: var(--bg);
+}
+
+/* Badges */
+.badge{
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.badge-pending{
+  color: var(--warning);
+  background: var(--warning-surface);
+  border: 1px solid var(--warning-border);
+}
+
+.badge-approved{
+  color: var(--success);
+  background: var(--success-surface);
+  border: 1px solid var(--success-border);
+}
+
+.badge-rejected{
+  color: var(--danger);
+  background: var(--danger-surface);
+  border: 1px solid var(--danger-border);
+}
+
+/* Listings list */
+.my-listings-grid{
+  display: grid;
+  gap: var(--s2);
+  margin: var(--s3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listing-item{
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+}
+
+.listing-item-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  flex-wrap: wrap;
+}
+
+.listing-item-title{
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.listing-item-meta{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+}
+
+.listing-item-actions{
+  margin-top: var(--s1);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.review-note{
+  margin: var(--s1) 0 0;
+  padding: var(--s1) var(--s2);
+  border: 1px solid var(--danger-border);
+  border-radius: 8px;
+  color: var(--danger);
+  font-size: 13.5px;
+}
+
+/* ---------- Tabs (Admin) ---------- */
+.tabs{
+  display: flex;
+  gap: var(--s1);
+  margin-bottom: var(--s3);
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-btn{
+  padding: 10px var(--s2);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.tab-btn:hover{
+  color: var(--text);
+}
+
+.tab-btn[aria-selected="true"]{
+  color: var(--text);
+  border-bottom-color: var(--focus-ring);
+}
+
+.admin-items-list{
+  display: grid;
+  gap: var(--s3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-item{
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+}
+
+.item-date,
+.item-detail{
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.link-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  flex-wrap: wrap;
+  padding: var(--s1) var(--s2);
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: var(--s1) 0;
+}
+
+.link-raw{
+  font-size: 13.5px;
+  color: var(--muted);
+  word-break: break-all;
+}
+
+.admin-actions{
+  display: flex;
+  gap: var(--s1);
+  flex-wrap: wrap;
+  margin-top: var(--s1);
+}
+
+.inline-reject-box{
+  display: grid;
+  gap: var(--s1);
+  margin-top: var(--s2);
+  padding: var(--s2);
+  background: var(--surface-strong);
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+}
+
+.reject-actions{
+  display: flex;
+  gap: var(--s1);
+}
+
+/* ---------- Manage page (Claim & Bot) ---------- */
+.claim-steps{
+  margin: 0;
+  padding-left: var(--s3);
+  color: var(--muted);
+  font-size: 14.5px;
+  display: grid;
+  gap: var(--s1);
+}
+
+.command-box{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  flex-wrap: wrap;
+  margin: var(--s2) 0;
+  padding: var(--s2);
+  background: var(--input-bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+}
+
+.claim-code-display{
+  font-family: monospace;
+  font-size: 15px;
+  color: var(--text);
+  word-break: break-all;
+}
+
+.claim-timer{
+  margin: var(--s1) 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.claim-actions{
+  margin-top: var(--s2);
+}
+
+.preview-box{
+  margin-top: var(--s3);
+  padding: var(--s3);
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+}
+
+.preview-box h3{
+  margin: 0 0 var(--s1);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.preview-message{
+  padding: var(--s2);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14.5px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Homepage card link */
+.card-link{
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card-link:focus-visible{
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--radius);
+}
+
+/* Noscript fallback in login.html */
+.noscript-warning{
+  display: block;
+  margin-bottom: var(--s2);
+}
+
+.noscript-link{
+  color: inherit;
+  text-decoration: underline;
 }
