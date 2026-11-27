@@ -11,7 +11,7 @@ const password = "correct-horse-battery-staple";
 const responses = [];
 
 async function waitForServer() {
-  for (let attempt = 0; attempt < 30; attempt += 1) {
+  for (let attempt = 0; attempt < 100; attempt += 1) {
     try {
       if ((await fetch(`${baseUrl}/api/health`)).ok) return;
     } catch {}

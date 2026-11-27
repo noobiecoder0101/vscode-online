@@ -15,9 +15,18 @@ export async function api(path, options = {}) {
   const headers = { ...options.headers };
 
   let body = options.body;
+
+  // The server requires a JSON content type on every write request, even when
+  // there are no fields to send (Approve, Claim, Sign out). Send an empty
+  // object instead of nothing.
+  const isWrite = method !== "GET" && method !== "HEAD";
+  if (isWrite && body === undefined) body = {};
+
   if (body !== undefined && typeof body === "object" && !(body instanceof FormData) && !(body instanceof Blob)) {
     headers["Content-Type"] = "application/json";
     body = JSON.stringify(body);
+  } else if (isWrite && typeof body === "string" && !headers["Content-Type"]) {
+    headers["Content-Type"] = "application/json";
   }
 
   const fetchOptions = {
